@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %} {% endblock %}</title>
+</head>
+<body>
+<header>
+    <div id="menu"> <!-- Меню -->
+        <img src="/media/Rubiks_logo.png" alt="Логотип" height="100" width="200"> <!-- Логотип сайта -->
+        <a href="{% url 'katalog' %}">Главная</a>|
+        <a href="{% url 'about'%}">О нас</a>|
+        <a href="{% url 'contact'%}">Контакты</a>
+
+    </div>
+</header>
+</body>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+{%block content%}
+{% endblock %}
+</html>

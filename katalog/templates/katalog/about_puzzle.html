@@ -1,0 +1,29 @@
+{% extends 'katalog/base.html' %}
+{% block title %} about {% endblock %}
+
+{%block content %}
+<style>
+.main {
+    column-count:2;
+}
+
+</style>
+<div class="main">
+    <div>
+        <img src="{{puzzle.img.url}}" alt="photo" width="400" height="400" class="rounded">
+    </div>
+    <div>
+        <h2>{{puzzle}}</h2>
+        {% if puzzle.counter %}
+        <span class="badge badge-success">Есть в наличии</span>
+        {%else%}
+        <span class="badge badge-danger">Нет в наличии</span>
+        {%endif%}
+        <p>Цена: {{puzzle.price}}</p>
+        <input type="submit" value="Купить" class="btn btn-primary">
+        <br>
+        <p>Тип: {{puzzle.type}}</p>
+        <p>Компания: {{puzzle.company}}</p>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,57 @@
+{% extends 'katalog/base.html' %}
+{% block title %} index {% endblock %}
+
+{%block content %}
+<style>
+body {
+    font-family: "Lato", sans-serif;
+}
+.content_flex {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    margin: 0 auto;
+}
+.content_flex .filter {
+    background-color: #ade7ff2b;
+    margin-left: 20px;
+    width: 20%;
+    padding: 1.5rem 2rem 2rem 0em;
+    box-sizing: border-box;
+}
+.content_flex .catalog {
+    margin-left: 10px;
+    width: 80%;
+    padding: 1rem 0rem;
+    box-sizing: border-box;
+    display: grid;
+    grid-template-columns: repeat(4, 250px);
+    grid-gap: 10px;
+}
+
+
+</style>
+<div class="content_flex">
+    <div class="filter">
+        <form method="get" action="/filter">
+            <input type="submit" value="Поиск">
+            {{form.as_p}}
+        </form>
+    </div>
+    <div class="catalog">
+        {% for puzzle in puzzles%}
+
+        <div class="alert alert-dark" role="alert">
+            <a href="/katalog/{{puzzle.id}}">
+                <img src="{{puzzle.img.url}}" alt="photo" width="200" height="200" class="rounded">
+            </a>
+            <p>{{puzzle}}</p>
+            <p>Цена: {{puzzle.price}}</p>
+            <input type="submit" value="Купить" class="btn btn-primary">
+        </div>
+        {%endfor%}
+    </div>
+</div>
+
+
+{% endblock %}
