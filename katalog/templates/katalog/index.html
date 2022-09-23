@@ -33,8 +33,8 @@ body {
 </style>
 <div class="content_flex">
     <div class="filter">
-        <form method="get" action="/filter">
-            <input type="submit" value="Поиск">
+        <form method="get" action="{% url 'filter' %}">
+            <input type="submit" value="search">
             {{form.as_p}}
         </form>
     </div>
@@ -46,8 +46,8 @@ body {
                 <img src="{{puzzle.img.url}}" alt="photo" width="200" height="200" class="rounded">
             </a>
             <p>{{puzzle}}</p>
-            <p>Цена: {{puzzle.price}}</p>
-            <input type="submit" value="Купить" class="btn btn-primary">
+            <p>Price: {{puzzle.price}}</p>
+            <input type="submit" value="Add to Basket" class="btn btn-primary">
         </div>
         {%endfor%}
     </div>

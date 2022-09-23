@@ -8,14 +8,24 @@
 <header>
     <div id="menu"> <!-- Меню -->
         <img src="/media/Rubiks_logo.png" alt="Логотип" height="100" width="200"> <!-- Логотип сайта -->
-        <a href="{% url 'katalog' %}">Главная</a>|
-        <a href="{% url 'about'%}">О нас</a>|
-        <a href="{% url 'contact'%}">Контакты</a>
-
+        <a href="{% url 'katalog' %}">Katalog</a>|
+        <a href="{% url 'about'%}">About</a>|
+        <a href="{% url 'contact'%}">Contact</a>____________________________
+        {% if user.is_authenticated %}
+        {{user}}
+        <form method="POST" action="{% url 'logout_user' %}">{% csrf_token %}
+            <button type="submit">LogOut</button>
+        </form>
+        {% else %}
+        <a href="{% url 'login_user' %}">login</a>/
+        <a href="{% url 'signup_user' %}">Sign up</a>
+        {% endif %}
     </div>
+
 </header>
 </body>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+      integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
 {%block content%}
 {% endblock %}
 </html>

@@ -6,7 +6,7 @@ CHOICE_COMPANY = ((company.name, company.name) for company in Company.objects.al
 
 
 class PuzzleForm(forms.Form):
-    type = forms.MultipleChoiceField(choices=CHOICE_TYPE, widget=forms.CheckboxSelectMultiple(), label='Тип')
-    company = forms.MultipleChoiceField(choices=CHOICE_COMPANY, widget=forms.CheckboxSelectMultiple(), label='Бренды')
-    price_from = forms.IntegerField(label='цена от',required=False)
-    price_to = forms.IntegerField(label='цена до',required=False)
+    type = forms.MultipleChoiceField(choices=CHOICE_TYPE, widget=forms.CheckboxSelectMultiple())
+    company = forms.MultipleChoiceField(choices=CHOICE_COMPANY, widget=forms.CheckboxSelectMultiple())
+    price_from = forms.IntegerField(required=False)
+    price_to = forms.IntegerField(required=False)
