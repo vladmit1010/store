@@ -16,6 +16,7 @@ class TypePuzzle(models.Model):
     def __str__(self):
         return self.name
 
+
 class Puzzle(models.Model):
     type = models.ForeignKey(TypePuzzle, on_delete=models.CASCADE, null=True, default='3')
     model = models.CharField(max_length=50)

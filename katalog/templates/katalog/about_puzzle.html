@@ -7,6 +7,7 @@
     column-count:2;
 }
 
+
 </style>
 <div class="main">
     <div>
@@ -19,9 +20,12 @@
         {%else%}
         <span class="badge badge-danger">Нет в наличии</span>
         {%endif%}
-        <p>Цена: {{puzzle.price}}</p>
-        <input type="submit" value="Купить" class="btn btn-primary">
-        <br>
+        <p>Price: {{puzzle.price}}</p>
+        <p>In stock: {{puzzle.counter}}</p>
+        <form action="{% url 'add_puzzle_to_cart' puzzle.id %}" method="get">
+            <input name="quantity" type="number" min="1" max="{{puzzle.counter}}" value="1">
+            <input type="submit" value="Add to basket" class="btn btn-primary">
+        </form>
         <p>Тип: {{puzzle.type}}</p>
         <p>Компания: {{puzzle.company}}</p>
     </div>

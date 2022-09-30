@@ -10,7 +10,8 @@
         <img src="/media/Rubiks_logo.png" alt="Логотип" height="100" width="200"> <!-- Логотип сайта -->
         <a href="{% url 'katalog' %}">Katalog</a>|
         <a href="{% url 'about'%}">About</a>|
-        <a href="{% url 'contact'%}">Contact</a>____________________________
+        <a href="{% url 'contact'%}">Contact</a>|
+        <a href="{% url 'my_basket' %}">basket</a>____________________________
         {% if user.is_authenticated %}
         {{user}}
         <form method="POST" action="{% url 'logout_user' %}">{% csrf_token %}
