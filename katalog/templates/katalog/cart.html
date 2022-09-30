@@ -1,0 +1,41 @@
+{% extends 'katalog/base.html' %}
+{% block title %} cart {% endblock %}
+
+{%block content %}
+{% if cart%}
+<table>
+    <thead>
+    <tr>
+        <th>Image</th>
+        <th>Product</th>
+        <th>Quantity</th>
+        <th>Remove</th>
+        <th>Unit price</th>
+        <th>Price</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for item in cart %}
+    <tr>
+        <td>
+            <img src="{{item.0.img.url}}" alt="photo" width="200" height="200" class="rounded">
+        </td>
+        <td>{{ item.0.model }}</td>
+        <td>{{ item.1 }}</td>
+        <td><a href="{% url 'remove_puzzle_in_basket' item.0.id %}">Remove</a></td>
+        <td class="num">${{ item.0.price }}</td>
+        <td class="num">{% widthratio item.1 1 item.0.price %}</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+<h2>Total price: {{total}}</h2>
+<form action="">
+    {{form.as_p}}
+    <input type="submit" value="checkout" class = "btn btn-primary">
+</form>
+{% else %}
+<h2>Cart is empty</h2>
+{% endif %}
+
+{% endblock %}
