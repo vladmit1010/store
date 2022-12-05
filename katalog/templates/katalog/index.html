@@ -1,5 +1,5 @@
 {% extends 'katalog/base.html' %}
-{% block title %} index {% endblock %}
+{% block title %} store rubiks {% endblock %}
 
 {%block content %}
 <style>
@@ -28,6 +28,7 @@ body {
     grid-template-columns: repeat(4, 250px);
     grid-gap: 10px;
 }
+
 </style>
 <div class="content_flex">
     <div class="filter">
@@ -38,22 +39,21 @@ body {
     </div>
     <div class="catalog">
         {% for puzzle in puzzles%}
-
         <div class="alert alert-dark" role="alert">
-            <a href="/katalog/{{puzzle.id}}">
+            <a href="{% url 'about_puzzle' puzzle.id %}">
                 <img src="{{puzzle.img.url}}" alt="photo" width="200" height="200" class="rounded">
             </a>
             <p>{{puzzle}}</p>
             {% if puzzle.counter%}
             <form action="{% url 'add_puzzle_to_cart' puzzle.id %}" method="get">
                 <p>Price: {{puzzle.price}}</p>
-                <input name= "quantity" type="number" min="1" max="{{puzzle.counter}}" value="1">
-                <input type="submit" value="Add to basket" class="btn btn-primary">
+                <input name="quantity" type="number" min="1" max="{{puzzle.counter}}" value="1">
+                <input type="submit" value="Add" class="btn btn-primary">
             </form>
             {% else %}
             <p>Price: {{ puzzle.price }}</p>
             <p>not available</p>
-            {% endif  %}
+            {% endif %}
         </div>
         {%endfor%}
     </div>

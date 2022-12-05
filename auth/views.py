@@ -6,6 +6,7 @@ from django.contrib.auth import login, logout, authenticate
 
 
 def signup_user(request):
+    '''Реєстрація нового користуача'''
     if request.method == 'GET':
         return render(request, 'katalog/signup_user.html', {'form': UserCreationForm()})
     if request.method == 'POST':
@@ -14,7 +15,7 @@ def signup_user(request):
                 user = User.objects.create_user(request.POST['username'], password=request.POST['password1'])
                 user.save()
                 login(request, user)
-                return redirect('/katalog')
+                return redirect('katalog')
             except IntegrityError:
                 return render(request, 'katalog/signup_user.html',
                               {'form': UserCreationForm(), 'error': 'This username already been taken'})
@@ -24,12 +25,14 @@ def signup_user(request):
 
 
 def logout_user(request):
+    '''Вихід зі свого аккаунта'''
     if request.method == "POST":
         logout(request)
-        return redirect('/katalog')
+        return redirect('katalog')
 
 
 def login_user(request):
+    '''Вхід да свого аккаунту'''
     if request.method == 'GET':
         return render(request, 'katalog/login.html', {'form': AuthenticationForm()})
     if request.method == 'POST':
@@ -39,4 +42,4 @@ def login_user(request):
                           {'form': AuthenticationForm(), 'error': 'username or password did not match'})
         else:
             login(request, user)
-            return redirect('/katalog')
+            return redirect('katalog')

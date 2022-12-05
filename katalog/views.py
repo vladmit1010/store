@@ -1,33 +1,41 @@
 from django.shortcuts import render, redirect
-from .models import Company, Puzzle, TypePuzzle
+from .models import Company, Puzzle, TypePuzzle, Order
 from .forms import PuzzleForm
-from auth.forms import BuyerForm
+from katalog.forms import BuyerForm
+
 cart = {}
 
 
 def home(request):
+    '''Головна сторінка'''
     form = PuzzleForm
     puzzles = Puzzle.objects.all().order_by('-counter')
     type_puzzle = TypePuzzle.objects.all().order_by('name')
     company_puzzle = Company.objects.all()
+    is_admin = request.user.is_staff
     return render(request, 'katalog/index.html',
-                  {'puzzles': puzzles, 'type_puzzle': type_puzzle, 'company_puzzle': company_puzzle, 'form': form})
+                  {'puzzles': puzzles, 'type_puzzle': type_puzzle, 'company_puzzle': company_puzzle, 'form': form,
+                   'is_admin': is_admin})
 
 
 def about(request):
+    '''Про сайт'''
     return render(request, 'katalog/about.html')
 
 
-def catalog(request):
+def contact(request):
+    '''Наші контактні номери'''
     return render(request, 'katalog/contact.html')
 
 
 def about_puzzle(request, id_puzzle):
+    '''Інформація про конкретниий товар'''
     puzzle = Puzzle.objects.get(id=id_puzzle)
     return render(request, 'katalog/about_puzzle.html', {'puzzle': puzzle})
 
 
 def filter(request):
+    '''Фільтр'''
     form = PuzzleForm
     puzzles = Puzzle.objects.all().order_by('-counter')
     type_puzzle = TypePuzzle.objects.all().order_by('name')
@@ -62,6 +70,7 @@ def filter(request):
 
 
 def add_puzzle_to_cart(request, id_puzzle):
+    '''Додавання до корзини нового товару'''
     if cart.get(request.user) is None:
         cart.update({request.user: []})
     for item in cart[request.user]:
@@ -69,10 +78,11 @@ def add_puzzle_to_cart(request, id_puzzle):
             break
     else:
         cart[request.user].append([Puzzle.objects.get(id=id_puzzle), request.GET['quantity']])
-    return redirect('/katalog')
+    return redirect('katalog')
 
 
 def my_basket(request):
+    '''Корзина'''
     basket_users = cart.get(request.user)
     form = BuyerForm()
     total = 0
@@ -80,12 +90,30 @@ def my_basket(request):
         return render(request, 'katalog/cart.html', {'cart': basket_users, 'total': total})
     for item in basket_users:
         total += item[0].price * int(item[1])
-    return render(request, 'katalog/cart.html', {'cart': basket_users, 'total': total,'form':form})
+    if request.method == 'POST':
+        form = BuyerForm(request.POST, request.FILES)
+        if form.is_valid():
+            user_name = form.cleaned_data['name']
+            user_surname = form.cleaned_data['surname']
+            email = form.cleaned_data['email']
+            address_post = form.cleaned_data['address_post']
+            order = Order(
+                user_name=user_name,
+                user_surname=user_surname,
+                email=email,
+                address_post=address_post,
+                total_price=total,
+                order=';'.join(
+                    [f'{basket_users[item][0]}: {basket_users[item][1]} ' for item in range(len(basket_users))])
+            ).save()
+        return redirect('katalog')
+    return render(request, 'katalog/cart.html', {'cart': basket_users, 'total': total, 'form': form})
 
 
 def remove_puzzle_in_basket(request, id_puzzle):
+    '''Видалення товару з корзини'''
     basket_users = cart.get(request.user)
     for item in basket_users:
         if Puzzle.objects.get(id=id_puzzle) in item:
             basket_users.remove(item)
-    return redirect('/katalog/my_basket/')
+    return redirect('my_basket')

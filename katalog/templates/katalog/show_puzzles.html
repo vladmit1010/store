@@ -1,0 +1,57 @@
+{% extends 'katalog/base.html' %}
+{% block title %} show puzzles.html {% endblock %}
+
+{%block content %}
+<div>
+    <a href="{% url 'show_puzzles' %}" class="btn btn-primary">show puzzles</a>
+    <a href="{% url 'show_companies' %}" class="btn btn-primary">show companies</a>
+    <a href="{% url 'show_types' %}" class="btn btn-primary">show types</a>
+    <a href="{% url 'show_orders' %}" class="btn btn-primary">show orders</a>
+</div>
+<div>
+    <a href="{% url 'add_puzzle' %}" class="btn btn-success">add puzzle</a>
+    <a href="{% url 'add_company' %}" class="btn btn-success">add company</a>
+    <a href="{% url 'add_type' %}" class="btn btn-success">add type</a>
+
+</div>
+<table class="table table-bordered">
+    <thead>
+    <tr>
+        <th>func</th>
+        <th>img</th>
+        <th>type</th>
+        <th>model</th>
+        <th>company</th>
+        <th>price</th>
+        <th>counter</th>
+    </tr>
+    </thead>
+    {% for puzzle in puzzles %}
+    <tr>
+        <td>
+            <a href="{% url 'edit_puzzle' puzzle.id %}">edit</a>
+            <a href="{% url 'delete_puzzle' puzzle.id %}">delete</a>
+        </td>
+        <td>
+            <img src="{{puzzle.img.url}}" alt="photo" width="100" height="100" class="rounded">
+        </td>
+        <td>
+            {{puzzle.type}}
+        </td>
+        <td>
+            {{puzzle.model}}
+        </td>
+        <td>
+            {{puzzle.company}}
+        </td>
+        <td>
+            {{puzzle.price}}
+        </td>
+        <td>
+            {{puzzle.counter}}
+        </td>
+    </tr>
+    {% endfor %}
+
+</table>
+{% endblock %}

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Company, Puzzle, TypePuzzle
+from .models import Company, Puzzle, TypePuzzle, Order
 
 
 @admin.register(Puzzle)
@@ -14,4 +14,9 @@ class CompanyAdmin(admin.ModelAdmin):
 
 @admin.register(TypePuzzle)
 class TypePuzzleAdmin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(Order)
+class OrderAdmin(admin.ModelAdmin):
     pass

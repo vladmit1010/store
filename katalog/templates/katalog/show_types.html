@@ -1,0 +1,40 @@
+{% extends 'katalog/base.html' %}
+{% block title %} show types {% endblock %}
+
+{%block content %}
+<div>
+    <a href="{% url 'show_puzzles' %}" class="btn btn-primary">show puzzles</a>
+    <a href="{% url 'show_companies' %}" class="btn btn-primary">show companies</a>
+    <a href="{% url 'show_types' %}" class="btn btn-primary">show types</a>
+    <a href="{% url 'show_orders' %}" class="btn btn-primary">show orders</a>
+
+</div>
+<div>
+    <a href="{% url 'add_puzzle' %}" class="btn btn-success">add puzzle</a>
+    <a href="{% url 'add_company' %}" class="btn btn-success">add company</a>
+    <a href="{% url 'add_type' %}" class="btn btn-success">add type</a>
+</div>
+<table class="table table-bordered">
+    <thead>
+    <tr>
+        <th>func</th>
+        <th>name</th>
+    </tr>
+    </thead>
+    {% for t in types %}
+    <tr>
+        <td>
+            <a href="{% url 'edit_type' t.id %}">edit</a>
+            <a href="{% url 'delete_type' t.id %}">delete</a>
+        </td>
+        <td>
+            {{t.name}}
+        </td>
+        <td>
+            {{t.country}}
+        </td>
+    </tr>
+    {% endfor %}
+
+</table>
+{% endblock %}

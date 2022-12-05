@@ -1,0 +1,55 @@
+{% extends 'katalog/base.html' %}
+{% block title %} show puzzles.html {% endblock %}
+
+{%block content %}
+<div>
+    <a href="{% url 'show_puzzles' %}" class="btn btn-primary">show puzzles</a>
+    <a href="{% url 'show_companies' %}" class="btn btn-primary">show companies</a>
+    <a href="{% url 'show_types' %}" class="btn btn-primary">show types</a>
+    <a href="{% url 'show_orders' %}" class="btn btn-primary">show orders</a>
+</div>
+<div>
+    <a href="{% url 'add_puzzle' %}" class="btn btn-success">add puzzle</a>
+    <a href="{% url 'add_company' %}" class="btn btn-success">add company</a>
+    <a href="{% url 'add_type' %}" class="btn btn-success">add type</a>
+</div>
+<table class="table table-bordered">
+    <thead>
+    <tr>
+        <th>func</th>
+        <th>order</th>
+        <th>full name</th>
+        <th>address</th>
+        <th>price</th>
+        <th>made</th>
+    </tr>
+    </thead>
+    {% for order in orders %}
+    {% if order.is_made %}
+    <tr class="table-success">{% else %}
+    <tr class="table-warning">{% endif %}
+        <td>
+            <a href="{% url 'edit_order' order.id %}">edit</a>
+            <a href="{% url 'delete_order' order.id %}">delete</a>
+        </td>
+        <td style="width:50%">
+            {{order.order}}
+        </td>
+        <td>
+            {{order.user_surname}} {{order.user_name}}
+        </td>
+        <td>
+            {{order.address_post}}
+        </td>
+        <td>
+            {{order.total_price}}
+        </td>
+        <td>
+            {% if order.is_made %}+{% else %}-{% endif %}
+        </td>
+
+    </tr>
+    {% endfor %}
+
+</table>
+{% endblock %}

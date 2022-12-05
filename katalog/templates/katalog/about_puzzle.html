@@ -1,5 +1,5 @@
 {% extends 'katalog/base.html' %}
-{% block title %} about {% endblock %}
+{% block title %} {{puzzle}} {% endblock %}
 
 {%block content %}
 <style>
@@ -16,9 +16,9 @@
     <div>
         <h2>{{puzzle}}</h2>
         {% if puzzle.counter %}
-        <span class="badge badge-success">Есть в наличии</span>
+        <span class="badge badge-success">in stock</span>
         {%else%}
-        <span class="badge badge-danger">Нет в наличии</span>
+        <span class="badge badge-danger">not available</span>
         {%endif%}
         <p>Price: {{puzzle.price}}</p>
         <p>In stock: {{puzzle.counter}}</p>
